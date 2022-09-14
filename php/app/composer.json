@@ -1,0 +1,23 @@
+{
+  "name": "sgendreau/testblissim",
+  "authors": [
+    {
+      "name": "sebastiengendreau",
+      "email": "seb.gendreau@gmail.com"
+    }
+  ],
+  "autoload": {
+    "psr-4": {
+      "App\\": "src/",
+      "App\\Controller\\": "src/controller",
+      "App\\Lib\\": "src/lib",
+      "App\\Lib\\Exception\\": "src/lib/exception",
+      "App\\Lib\\Router\\": "src/lib/router",
+      "App\\Model\\": "src/model"
+    }
+  },
+  "require": {
+    "php": ">=8.0",
+    "ext-json": "*"
+  }
+}

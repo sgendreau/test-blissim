@@ -1,0 +1,42 @@
+version: '3.9'
+services:
+  db:
+    container_name: db_blissim_sgc
+    image: postgres:13
+    restart: always
+    environment:
+      POSTGRES_USER: blissim
+      POSTGRES_PASSWORD: products
+      POSTGRES_DB: test_blissim_sgc
+      TZ: Europe/Paris
+      PGTZ: Europe/Paris
+    ports:
+      - 4002:5432
+    volumes:
+      - ./docker/postgres/dump.sql:/docker-entrypoint-initdb.d/dump.sql
+  php:
+    container_name: php_blissim_sgc
+    build:
+      context: ./docker/php
+    environment:
+      - DATABASE_URL=postgresql://blissim:products@db/app?serverVersion=13&charset=utf8
+    volumes:
+      - ./app:/var/www
+    depends_on:
+      - db
+  nginx:
+    container_name: nginx_blissim_sgc
+    build:
+      context: ./docker/nginx
+    ports:
+      - 4001:80
+      - 443:433
+    volumes:
+      - ./app:/var/www
+      - ./docker/nginx/nginx.conf:/etc/nginx/nginx.conf
+      - ./docker/nginx/sites/:/etc/nginx/sites-available
+      - ./docker/nginx/conf.d/:/etc/nginx/conf.d
+      - ./logs:/var/log/nginx
+    depends_on:
+      - php
+
