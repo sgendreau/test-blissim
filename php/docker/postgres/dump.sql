@@ -1,3 +1,5 @@
+CREATE DATABASE test_blissim_sgc;
+
 CREATE TABLE product_comment (
     id SERIAL NOT NULL,
     username varchar(50) NOT NULL,
